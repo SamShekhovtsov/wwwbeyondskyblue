@@ -35,6 +35,7 @@
   const nextButton = viewer.querySelector('.image-viewer-nav.next');
   let currentIndex = 0;
   let previousFocus = null;
+  let hideThumbnailsTimer = null;
 
   images.forEach((image, index) => {
     image.classList.add('viewer-trigger');
@@ -71,6 +72,7 @@
     viewer.setAttribute('aria-hidden', 'false');
     document.body.classList.add('viewer-open');
     showImage(index);
+    revealThumbnails();
     closeButton.focus();
   }
 
@@ -78,8 +80,18 @@
     viewer.hidden = true;
     viewer.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('viewer-open');
+    window.clearTimeout(hideThumbnailsTimer);
+    viewer.classList.remove('viewer-controls-visible');
     largeImage.removeAttribute('src');
     previousFocus?.focus?.();
+  }
+
+  function revealThumbnails() {
+    viewer.classList.add('viewer-controls-visible');
+    window.clearTimeout(hideThumbnailsTimer);
+    hideThumbnailsTimer = window.setTimeout(() => {
+      if (!thumbs.matches(':hover')) viewer.classList.remove('viewer-controls-visible');
+    }, 2600);
   }
 
   function showImage(index) {
@@ -112,6 +124,10 @@
   previousButton.addEventListener('click', showPrevious);
   nextButton.addEventListener('click', showNext);
   viewer.querySelector('[data-viewer-close]').addEventListener('click', closeViewer);
+  viewer.addEventListener('mousemove', revealThumbnails);
+  viewer.addEventListener('touchstart', revealThumbnails, { passive: true });
+  thumbs.addEventListener('mouseenter', () => window.clearTimeout(hideThumbnailsTimer));
+  thumbs.addEventListener('mouseleave', revealThumbnails);
 
   document.addEventListener('keydown', (event) => {
     if (viewer.hidden) return;
