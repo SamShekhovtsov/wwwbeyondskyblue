@@ -26,8 +26,8 @@ let activeModelKey = aircraftModels[queryModel] ? queryModel : aircraftSelect.va
 aircraftSelect.value = activeModelKey;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color('#091827');
-scene.fog = new THREE.Fog('#091827', 48, 125);
+scene.background = new THREE.Color('#27343d');
+scene.fog = new THREE.Fog('#27343d', 62, 150);
 
 const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 120);
 const initialCameraPosition = new THREE.Vector3(22, 10, 24);
@@ -41,7 +41,7 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+renderer.toneMappingExposure = 1.18;
 mount.append(renderer.domElement);
 
 const orbit = new OrbitControls(camera, renderer.domElement);
@@ -74,13 +74,14 @@ function material(color, roughness = 0.72, metalness = 0.12, emissive = null) {
 }
 
 const hangarMaterials = {
-  floor: material(0x30404b, 0.34, 0.55),
-  steel: material(0x263b4e, 0.48, 0.72),
-  darkSteel: material(0x111c29, 0.62, 0.6),
-  glass: material(0x8db7c9, 0.22, 0.18, 0x183d52),
-  yellow: material(0xd29422, 0.48, 0.3),
-  white: material(0xd9e3e8, 0.65, 0.18),
-  light: material(0xeef9ff, 0.24, 0.06, 0xc9f2ff),
+  floor: material(0x4a575e, 0.28, 0.62),
+  steel: material(0x1d5a88, 0.42, 0.68),
+  darkSteel: material(0x1b252d, 0.56, 0.58),
+  wall: material(0x89979c, 0.7, 0.12),
+  glass: material(0xa9c5cf, 0.26, 0.16, 0x25465a),
+  yellow: material(0xe0a51d, 0.44, 0.32),
+  white: material(0xc5ced1, 0.64, 0.16),
+  light: material(0xf4fbff, 0.18, 0.04, 0xd8f7ff),
   red: material(0xd45454, 0.48, 0.12),
 };
 
@@ -97,30 +98,46 @@ function addBox(name, position, size, boxMaterial, options = {}) {
 
 function addLightPanel(position, size = [2.5, 0.08, 0.55]) {
   const panel = addBox('Hangar ceiling light', position, size, hangarMaterials.light, { castShadow: false });
-  const light = new THREE.PointLight(0xd7f3ff, 8, 13, 2);
+  const light = new THREE.PointLight(0xd7f3ff, 12, 16, 2);
   light.position.set(position[0], position[1] - 0.15, position[2]);
   scene.add(light);
   return panel;
 }
 
 function addHangar() {
-  // Dimensions and proportions are intentionally based on the round130 screenshot set.
+  // Dimensions and proportions are intentionally based on the round130/round131 screenshot sets.
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(100, 72), hangarMaterials.floor);
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = 0;
   floor.receiveShadow = true;
   scene.add(floor);
 
-  const grid = new THREE.GridHelper(100, 50, 0x66808d, 0x405463);
-  grid.position.y = 0.012;
-  grid.material.transparent = true;
-  grid.material.opacity = 0.33;
-  scene.add(grid);
+  for (const x of [-40, -32, -24, -16, -8, 0, 8, 16, 24, 32, 40]) {
+    addBox('Floor expansion joint', [x, 0.018, 0], [0.055, 0.035, 70], hangarMaterials.darkSteel, { castShadow: false });
+  }
+  for (const z of [-28, -20, -12, -4, 4, 12, 20, 28]) {
+    addBox('Floor expansion joint', [0, 0.019, z], [94, 0.035, 0.055], hangarMaterials.darkSteel, { castShadow: false });
+  }
+  for (const z of [-19, -15, 15, 19]) {
+    addBox('Yellow service lane', [19, 0.026, z], [28, 0.04, 0.16], hangarMaterials.yellow, { castShadow: false });
+  }
 
   addBox('Back wall', [-48, 13, 0], [0.6, 26, 72], hangarMaterials.darkSteel);
   addBox('Left wall', [0, 13, -36], [96, 26, 0.6], hangarMaterials.darkSteel);
   addBox('Right wall', [0, 13, 36], [96, 26, 0.6], hangarMaterials.darkSteel);
   addBox('Roof', [0, 27, 0], [96, 0.45, 72], hangarMaterials.darkSteel, { castShadow: false });
+
+  for (const x of [-42, -30, -18, -6, 6, 18, 30, 42]) {
+    for (const z of [-35.55, 35.55]) {
+      addBox('Corrugated wall bay', [x, 14, z], [10.8, 18, 0.08], hangarMaterials.wall, { castShadow: false });
+      addBox('Wall blue belt', [x, 8.2, z - Math.sign(z) * 0.08], [10.8, 0.44, 0.1], hangarMaterials.steel, { castShadow: false });
+      addBox('Wall window strip', [x, 19.8, z - Math.sign(z) * 0.08], [10.8, 2.7, 0.1], hangarMaterials.glass, { castShadow: false });
+    }
+  }
+  for (const z of [-28, -18, -8, 2, 12, 22, 32]) {
+    addBox('Back wall bay', [-47.62, 14, z], [0.08, 18, 9.2], hangarMaterials.wall, { castShadow: false });
+    addBox('Back wall blue belt', [-47.7, 8.2, z], [0.1, 0.44, 9.2], hangarMaterials.steel, { castShadow: false });
+  }
 
   for (const x of [-46, -34, -22, -10, 2, 14, 26, 38, 48]) {
     for (const z of [-35.5, 35.5]) addBox('Hangar column', [x, 13, z], [0.7, 26, 0.7], hangarMaterials.steel);
@@ -154,9 +171,9 @@ function addHangar() {
   door.material.transparent = true;
   door.material.opacity = 0.38;
 
-  const hemi = new THREE.HemisphereLight(0x9bd9f0, 0x0b1723, 1.35);
+  const hemi = new THREE.HemisphereLight(0xc9e9f5, 0x26323a, 1.9);
   scene.add(hemi);
-  const key = new THREE.DirectionalLight(0xd4efff, 3.7);
+  const key = new THREE.DirectionalLight(0xe7f7ff, 4.8);
   key.position.set(7, 16, 9);
   key.castShadow = true;
   key.shadow.mapSize.set(2048, 2048);
@@ -167,6 +184,9 @@ function addHangar() {
   key.shadow.camera.top = 46;
   key.shadow.camera.bottom = -46;
   scene.add(key);
+  const fill = new THREE.DirectionalLight(0x9cc9e2, 1.6);
+  fill.position.set(-35, 12, -22);
+  scene.add(fill);
 }
 
 function configureAircraft(root) {

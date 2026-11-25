@@ -185,8 +185,16 @@ a {
 }
 
 .hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   max-width: 1180px;
 }
+
+.hero-copy .eyebrow { order: 1; }
+.hero-copy .brand-title { order: 2; }
+.hero-copy .hero-lede { order: 3; }
+.hero-copy .actions { order: 4; }
 
 .eyebrow {
   display: inline-flex;

@@ -4,12 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BeyondSkyBlue | Interactive 3D Hangar</title>
-    <meta name="description" content="A lightweight interactive BeyondSkyBlue 3D hangar prototype shaped from the round130 simulator reference set.">
+    <meta name="description" content="BeyondSkyBlue's interactive hangar is being refined against the round131 reference set.">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/showroom/showroom.css">
+    <script>
+      document.documentElement.classList.toggle('showroom-preview', new URLSearchParams(window.location.search).get('preview') === '1');
+    </script>
     <script type="importmap">
       {
         "imports": {
@@ -30,8 +33,8 @@
           <span>BeyondSkyBlue</span>
         </a>
         <div class="showroom-heading">
-          <p class="eyebrow">Walkable hangar / round130 reference pass</p>
-          <h1 id="scene-title">Saab 340 B · 3D showroom</h1>
+          <p class="eyebrow">Hangar quality pass / round131 reference set</p>
+          <h1 id="scene-title">BeyondSkyBlue · 3D hangar</h1>
         </div>
         <a class="back-link" href="/models/saab-340b/">&lt; Build page</a>
       </header>
@@ -68,7 +71,17 @@
 
       <div class="scene-crosshair" aria-hidden="true"></div>
       <div class="scene-footer"><span>BeyondSkyBlue 3D lab</span><span>Generated low-poly GLB prototype · not a final production aircraft</span></div>
+      <section class="showroom-hold" aria-labelledby="showroom-hold-title">
+        <p class="eyebrow">Hangar quality pass</p>
+        <h2 id="showroom-hold-title">The walkable hangar is being rebuilt.</h2>
+        <p>We are refining the scene against the new round131 hangar references before bringing the interactive preview back to the public site.</p>
+        <a class="hold-button" href="/">Return to the fleet</a>
+      </section>
     </main>
-    <script type="module" src="/showroom/showroom.js"></script>
+    <script type="module">
+      if (document.documentElement.classList.contains('showroom-preview')) {
+        import('/showroom/showroom.js');
+      }
+    </script>
   </body>
 </html>
