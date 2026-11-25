@@ -185,7 +185,7 @@ a {
 }
 
 .hero-copy {
-  max-width: 720px;
+  max-width: 1180px;
 }
 
 .eyebrow {
@@ -281,13 +281,19 @@ h3,
 }
 
 .aircraft-shortcuts {
-  margin-top: 14px;
+  width: 100%;
+  margin-top: 34px;
+  flex-wrap: nowrap;
+  gap: 10px;
 }
 
 .aircraft-shortcuts .button {
   min-height: 44px;
-  padding: 0 14px;
-  font-size: 0.86rem;
+  min-width: 0;
+  flex: 1 1 0;
+  padding: 0 12px;
+  font-size: 0.82rem;
+  white-space: nowrap;
 }
 
 .button {
@@ -408,6 +414,35 @@ h3,
   border-radius: 8px;
   background: var(--panel);
   box-shadow: var(--shadow);
+}
+
+.model-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 42px 0;
+  color: #336b86;
+  font-family: Oxanium, Rajdhani, "Segoe UI", system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.model-divider::before,
+.model-divider::after {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, #b7cbd7 25%, #b7cbd7 75%, transparent);
+  content: "";
+}
+
+.model-divider span {
+  padding: 9px 14px;
+  border: 1px solid #cbd8e1;
+  border-radius: 999px;
+  background: #f6fbfe;
+  white-space: nowrap;
 }
 
 .model-media {
@@ -1379,6 +1414,14 @@ body.viewer-open {
   .model-copy {
     padding: 32px;
   }
+
+  .aircraft-shortcuts {
+    flex-wrap: wrap;
+  }
+
+  .aircraft-shortcuts .button {
+    flex-basis: calc(50% - 10px);
+  }
 }
 
 @media (max-width: 700px) {
@@ -1404,6 +1447,14 @@ body.viewer-open {
   .actions,
   .button {
     width: 100%;
+  }
+
+  .aircraft-shortcuts {
+    flex-wrap: wrap;
+  }
+
+  .aircraft-shortcuts .button {
+    flex-basis: 100%;
   }
 
   .section {
