@@ -1621,3 +1621,102 @@ body.viewer-open {
     transition-duration: 0.01ms !important;
   }
 }
+
+.hangar3d-section {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(49, 126, 166, 0.2), transparent 32%),
+    linear-gradient(135deg, #08131f 0%, #0b1e2d 52%, #07121c 100%);
+}
+
+.hangar3d-section::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(158, 223, 255, 0.62), transparent);
+  content: '';
+}
+
+.scene-launch-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.scene-launch-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(158, 223, 255, 0.22);
+  border-radius: 14px;
+  background: rgba(17, 35, 50, 0.88);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.scene-launch-card:hover {
+  border-color: rgba(158, 223, 255, 0.72);
+  box-shadow: 0 24px 58px rgba(0, 0, 0, 0.32);
+  transform: translateY(-4px);
+}
+
+.scene-launch-card > img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.88) contrast(1.04);
+}
+
+.scene-launch-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 18px;
+}
+
+.scene-launch-chip {
+  display: inline-flex;
+  margin-bottom: 10px;
+  border: 1px solid rgba(158, 223, 255, 0.28);
+  border-radius: 999px;
+  padding: 5px 8px;
+  color: #a9e3fb;
+  font: 700 0.62rem Oxanium, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scene-launch-copy h3 {
+  margin: 0;
+  color: #f2f8fb;
+  font: 800 1.2rem Oxanium, sans-serif;
+}
+
+.scene-launch-copy p {
+  min-height: 3.8em;
+  margin: 9px 0 18px;
+  color: #b6cbd6;
+  font-size: 0.94rem;
+  line-height: 1.35;
+}
+
+.scene-launch-copy .button {
+  margin-top: auto;
+}
+
+@media (max-width: 1180px) {
+  .scene-launch-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .scene-launch-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BeyondSkyBlue | Interactive 3D Hangar</title>
+    <meta name="description" content="A lightweight interactive BeyondSkyBlue 3D hangar prototype shaped from the round130 simulator reference set.">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/showroom/showroom.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main class="showroom-shell">
+      <div id="scene" class="scene" aria-label="Interactive 3D hangar scene"></div>
+      <div class="scene-vignette" aria-hidden="true"></div>
+
+      <header class="showroom-header">
+        <a class="showroom-brand" href="/" aria-label="Back to BeyondSkyBlue homepage">
+          <span class="brand-mark">BSB</span>
+          <span>BeyondSkyBlue</span>
+        </a>
+        <div class="showroom-heading">
+          <p class="eyebrow">Walkable hangar / round130 reference pass</p>
+          <h1 id="scene-title">Saab 340 B · 3D showroom</h1>
+        </div>
+        <a class="back-link" href="/models/saab-340b/">&lt; Build page</a>
+      </header>
+
+      <section class="scene-panel scene-panel-left" aria-label="Scene controls">
+        <div class="panel-label">Aircraft</div>
+        <select class="aircraft-select" id="aircraft-select" aria-label="Choose aircraft model">
+          <option value="saab-340b">Saab 340 B</option>
+          <option value="dash-8-q400">Dash 8 Q400</option>
+          <option value="sukhoi-superjet-100">SSJ Superjet 100</option>
+          <option value="mc-21-310">MC-21-310</option>
+        </select>
+        <div class="panel-label">Camera mode</div>
+        <div class="control-row">
+          <button class="control-button active" id="orbit-mode" type="button">Orbit</button>
+          <button class="control-button" id="walk-mode" type="button">Walk</button>
+        </div>
+        <button class="wide-button" id="reset-camera" type="button">Reset camera</button>
+        <p class="control-note" id="mode-note">Orbit: drag to rotate · wheel to zoom · right-drag to pan</p>
+      </section>
+
+      <section class="scene-panel scene-panel-right" aria-label="Prototype details">
+        <div class="status-line"><span class="status-dot" id="status-dot"></span><span id="status-text">Loading GLB model…</span></div>
+        <p>First hangar pass shaped from the round130 screenshot set: blue structural bays, translucent door panels, yellow crane rails, service blocks, reflective floor, and aircraft-scale circulation space.</p>
+        <p class="reference-note">The supplied simulator screenshots are used as modeling references and are not published as scene textures.</p>
+        <div class="legend"><span><i class="legend-chip aircraft-chip"></i> aircraft</span><span><i class="legend-chip hangar-chip"></i> hangar</span></div>
+      </section>
+
+      <section class="scene-help" id="walk-help" hidden>
+        <strong>Walk mode</strong>
+        <span>Click the scene, then use WASD to move · mouse to look · Q / E for height · Shift to move faster · Esc to release</span>
+        <button class="wide-button" id="enter-walk" type="button">Click to enter walk mode</button>
+      </section>
+
+      <div class="scene-crosshair" aria-hidden="true"></div>
+      <div class="scene-footer"><span>BeyondSkyBlue 3D lab</span><span>Generated low-poly GLB prototype · not a final production aircraft</span></div>
+    </main>
+    <script type="module" src="/showroom/showroom.js"></script>
+  </body>
+</html>
