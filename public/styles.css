@@ -416,11 +416,40 @@ h3,
   box-shadow: var(--shadow);
 }
 
+.model-panel-stacked {
+  display: flex;
+  flex-direction: column;
+}
+
+.model-panel-stacked .model-copy {
+  order: 1;
+  align-items: stretch;
+  padding: 42px;
+}
+
+.model-panel-stacked .model-media {
+  order: 2;
+  min-height: 560px;
+  border-top: 1px solid rgba(143, 214, 255, 0.18);
+}
+
+.model-panel-stacked .model-media img {
+  min-height: 560px;
+}
+
+.model-panel-stacked .mini-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.model-panel-stacked .feature-card {
+  min-height: 176px;
+}
+
 .model-divider {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin: 42px 0;
+  margin: 32px 0 42px;
   color: #336b86;
   font-family: Oxanium, Rajdhani, "Segoe UI", system-ui, sans-serif;
   font-size: 0.78rem;
@@ -1415,6 +1444,15 @@ body.viewer-open {
     padding: 32px;
   }
 
+  .model-panel-stacked .mini-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .model-panel-stacked .model-media,
+  .model-panel-stacked .model-media img {
+    min-height: 460px;
+  }
+
   .aircraft-shortcuts {
     flex-wrap: wrap;
   }
@@ -1464,6 +1502,19 @@ body.viewer-open {
   .section-title,
   .model-copy h3 {
     font-size: 2.25rem;
+  }
+
+  .model-panel-stacked .model-copy {
+    padding: 24px;
+  }
+
+  .model-panel-stacked .mini-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .model-panel-stacked .model-media,
+  .model-panel-stacked .model-media img {
+    min-height: 320px;
   }
 
   .feature-grid,
